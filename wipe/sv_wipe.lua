@@ -25,13 +25,32 @@ function Wipe(id, target)
             
         }, function(rowsChanged)
 
-        print("^1Wipe effectuer ! SteamID :"..steam.."^0")
-        TriggerClientEvent('esx:showNotification', id, "Player wipe successfully performed")
     end)
 
 end
+ESX.RegisterServerCallback('Wipe:Group', function(source, cb)
+	local xPlayer = ESX.GetPlayerFromId(source)
+	local group = xPlayer.getGroup()
+	cb(group)
+end)
 
+function sendLogs (message,webhook,color)
+	local embeds = {
+		{
+			["title"]=message,
+			["color"]=7419530,
+			
+		}
+		
+	}
+    if message == nil or message == '' then return FALSE end
+    PerformHttpRequest(webhook, function(err, text, headers) end, 'POST', json.encode({ username = name,embeds = embeds}), { ['Content-Type'] = 'application/json' })
+end
 
+RegisterServerEvent('LOGS:Wipe')
+AddEventHandler('LOGS:Wipe', function(message, webhook)
+sendLogs(message , webhook)
+end)
 
 
 
