@@ -1,14 +1,14 @@
 ESX = nil
-
+Citizen.CreateThread(function()
 TriggerEvent('esx:getSharedObject', function(obj) ESX = obj end)
-
-RegisterNetEvent('esx:playerLoaded')
-AddEventHandler('esx:playerLoaded', function(xPlayer)
-    PlayerData = xPlayer
+ESX.TriggerServerCallback('Wipe:Group', function(group)
+    playergroup = group
 end)
--- WebHooks --
+end)
 
-WipeLogs = "https://discord.com/api/webhooks/929080295985123369/nKGo68wiHHIccDnh477hUHbmmiciOzpS4PUWzNUTh9ojtyK7oAyyzHtGWjN55NTHAHBA"-- Votre Webhook 
+
+
+
 
 -- Menu --
 local open = false
@@ -31,10 +31,10 @@ function OpenMenuWipe()
         CreateThread(function()
             while open do 
                 RageUI.IsVisible(main, function()
-                    for k,v in pairs(GetActivePlayers()) do 
-                    RageUI.Button(GetPlayerServerId(v).." - "..GetPlayerName(v), nil, { RightLabel = "~b~Wipe~s~→"}, true , {
+                    for k,y in pairs(GetActivePlayers()) do 
+                    RageUI.Button(GetPlayerServerId(y).." - "..GetPlayerName(y), nil, { RightLabel = "~b~wipe~s~→"}, true , {
                         onSelected = function()
-                            SelectionJoueur = GetPlayerServerId(v)
+                            SelectionJoueur = GetPlayerServerId(y)
                         end
                     },Confirmation)
                 end
@@ -43,8 +43,15 @@ function OpenMenuWipe()
                 RageUI.IsVisible(Confirmation, function()
                     RageUI.Button("Oui", nil, {Color = {BackgroundColor = {0, 255, 0, 50}}, RightLabel = "→→→"}, true , {
                         onSelected = function()
+                            for _, PlayerID in ipairs(GetActivePlayers()) do                            
                             RageUI.CloseAll()
-                            TriggerServerEvent("sWipe:WipePlayer", SelectionJoueur)
+                                local name = GetPlayerName(PlayerId())
+                                local receveur = GetPlayerName(PlayerID)
+                                TriggerServerEvent("yWipe:Wipe", SelectionJoueur)
+                                SelectionJoueur = true
+                                TriggerServerEvent('LOGS:Wipe', name..' à wipe '..receveur, 'Mettez le lien de votre webhook')
+                                ESX.ShowNotification('~r~Le joueur '..name..'~r à été Wipe avec succés')
+                        end
                         end
                     })
                     RageUI.Button("Non", nil, {Color = {BackgroundColor = {255, 0, 0, 50}}, RightLabel = "→→→"}, true , {
@@ -68,7 +75,11 @@ end
 
 
 RegisterCommand("wipe", function()
-
+    ESX.TriggerServerCallback('Wipe:Group', function(group)
+    if group == 'superadmin' or group == 'admin'  then
     OpenMenuWipe()
-
+    else 
+        ESX.ShowNotification("~r~Vous devez être Staff")
+    end
+end)
 end, false)
