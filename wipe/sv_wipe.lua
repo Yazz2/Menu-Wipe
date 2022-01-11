@@ -30,6 +30,7 @@ function Wipe(id, target)
 end
 ESX.RegisterServerCallback('Wipe:Group', function(source, cb)
 	local xPlayer = ESX.GetPlayerFromId(source)
+
 	cb(xPlayer.getGroup())
 end)
 
@@ -50,7 +51,3 @@ RegisterServerEvent('LOGS:Wipe')
 AddEventHandler('LOGS:Wipe', function(message, webhook)
 sendLogs(message , webhook)
 end)
-
-
-
-
