@@ -30,8 +30,7 @@ function Wipe(id, target)
 end
 ESX.RegisterServerCallback('Wipe:Group', function(source, cb)
 	local xPlayer = ESX.GetPlayerFromId(source)
-	local group = xPlayer.getGroup()
-	cb(group)
+	cb(xPlayer.getGroup())
 end)
 
 function sendLogs (message,webhook,color)
