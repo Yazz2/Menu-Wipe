@@ -1,5 +1,5 @@
 # Menu-Wipe
-Voici un menu Wipe fait en RageUI V2 0.00ms
+Voici un menu Wipe fait en RageUI V2 0.00ms pour en savoir plus -> https://discord.gg/QDc73sHGgj
 
 ![unknown](https://user-images.githubusercontent.com/88659966/148642568-0835723e-2f2e-4257-9009-5175ef33af61.png)
 
